@@ -4,14 +4,26 @@
     $error = "";
 
     if (array_key_exists('city', $_GET)) {
+        
+        // echo file_get_contents("https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=68fd8c9d211a3ef6fc77befb1b346638");
+        
+        // echo file_get_contents("https://samples.openweathermap.org/data/2.5/weather?q=".$_GET['city']."&appid=68fd8c9d211a3ef6fc77befb1b346638");
 
-        $city = str_replace(' ', '', $_GET['city']);
+        $urlContents = file_get_contents("https://samples.openweathermap.org/data/2.5/weather?q=".$_GET['city']."&appid=68fd8c9d211a3ef6fc77befb1b346638");
 
+        echo $urlContents;
+        //キーと引数で連想配列取り出し
+        $weatherArray = json_decode($urlContents,true);
+        // print_r($weatherArray);
+        $weather = $_GET['city']."の天気：".$weatherArray['weather'][0]['main'].",".$weatherArray['weather'][0]['description'];
+
+
+
+        // echo "<p>";
+        // print_r('city');
     }
 
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +34,14 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
       <title>Weather Scraper</title>
+
+    <!-- Tether -->
+    <!-- 注意: Bootstrap 4より先に読み込みさせること -->
+    <!-- <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script> -->
+
+    <!-- Bootstrap 4 -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script> -->
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
 
